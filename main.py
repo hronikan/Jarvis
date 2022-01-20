@@ -2,13 +2,24 @@
 import os
 import random
 import speech_recognition
+import pyttsx3
+
+engine = pyttsx3.init()
 
 sr = speech_recognition.Recognizer()
-sr.pause_threshold = 0.5
+sr.pause_threshold = 1
+
+
+ru_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_RU-RU_IRINA_11.0"
+
+engine.setProperty('voice', ru_voice_id) 
+
+engine.setProperty('rate', 250)     
+
 
 commands_dict = {
     'commands': {
-        'greeting': ('привет', 'приветствую'),
+        'greeting': ('привет', 'приветствую', 'привет джарвис'),
         'create_task': ('добавить задачу', 'создать задачу', 'заметка'),
         'play_music': ('включить музыку', 'включи музыку', 'дискотека')
     }
@@ -28,9 +39,14 @@ def listen_command():
 
 
 def greeting():
-    return 'Привет нищеброд!'
+    engine.say('Здравствуйте, Сэр!')
+    engine.runAndWait()
+    return 'Здравствуйте, Сэр!'
 
 def create_task():
+
+    engine.say('Что добавим в список дел?')
+    engine.runAndWait()
 
     print('Что добавим в список дел?')
     
@@ -38,6 +54,9 @@ def create_task():
 
     with open('todo-list.txt', 'a') as file:
         file.write(f'{query}\n')
+
+    engine.say(f'Задача {query} добавлена!')
+    engine.runAndWait()
 
     return f'Задача {query} добавлена в todo-list!'
 
@@ -48,6 +67,9 @@ def play_music():
     files = os.listdir('D:\music')
     random_file = f'D:\music\{random.choice(files)}'
     os.startfile(f'{random_file}')
+
+    engine.say('Ща будет мясо')
+    engine.runAndWait()
 
     return f'Танцуем под {random_file.split("/")[-1]}'
 
