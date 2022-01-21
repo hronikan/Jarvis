@@ -7,7 +7,7 @@ import pyttsx3
 engine = pyttsx3.init()
 
 sr = speech_recognition.Recognizer()
-sr.pause_threshold = 1
+sr.pause_threshold = 0.5
 
 
 ru_voice_id = "HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Speech\Voices\Tokens\TTS_MS_RU-RU_IRINA_11.0"
@@ -22,7 +22,7 @@ commands_dict = {
         'greeting': ('привет', 'приветствую', 'привет джарвис'),
         'create_task': ('добавить задачу', 'создать задачу', 'заметка'),
         'play_music': ('включить музыку', 'включи музыку', 'дискотека'),
-        'off': ('выключись', 'выключить', 'пока')
+        'off': ('выключись', 'выключить', 'пока', 'стоп')
     }
 }
 
@@ -35,7 +35,7 @@ def listen_command():
 
         return query
     except speech_recognition.UnknownValueError:
-        return 'Damn... Не понял что ты сказал :/'
+        return 
 
 
 
@@ -84,6 +84,7 @@ def off():
 
 def main():
     query = listen_command()
+    print(query)
 
     for k, v in commands_dict['commands'].items():
         if query in v:
