@@ -21,7 +21,8 @@ commands_dict = {
     'commands': {
         'greeting': ('привет', 'приветствую', 'привет джарвис'),
         'create_task': ('добавить задачу', 'создать задачу', 'заметка'),
-        'play_music': ('включить музыку', 'включи музыку', 'дискотека')
+        'play_music': ('включить музыку', 'включи музыку', 'дискотека'),
+        'off': ('выключись', 'выключить', 'пока')
     }
 }
 
@@ -74,6 +75,13 @@ def play_music():
     return f'Танцуем под {random_file.split("/")[-1]}'
 
 
+def off():
+    engine.say('Досвидания!')
+    engine.runAndWait()
+    return 'Досвидания!', quit()
+    
+
+
 def main():
     query = listen_command()
 
@@ -82,5 +90,6 @@ def main():
             print(globals()[k]())
 
 
-if __name__ == '__main__':
-    main()
+while True:
+    if __name__ == '__main__':
+        main()
